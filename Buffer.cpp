@@ -19,7 +19,7 @@
 	buffAccess.unlock();
  }
 
- // Removes an item from the buffer and place it in item
+ // Removes an item from the buffer and place it in item .
  void Buffer::removeItem(int& item)
  {
 	buffAccess.lock();
