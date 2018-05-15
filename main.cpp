@@ -50,11 +50,13 @@ void producer(int prodId)
 		item = rand() % 100 ; // generate a random number as item
 
 		int bufferIndex = getRandomBufferIndex();
+		sem_wait ;
 
 		b[bufferIndex].insertItem(item);// should be call on the buffer
 
 		outputThread("Producer " + std::to_string(prodId) + "  inserted	" + std::to_string(item)+ "   into   buffer "+std::to_string(bufferIndex) );
 		//std::cout << "Producer " << prodId <<" insert " << item << std::endl;
+		sem_post;
 	}
 }
 
@@ -67,14 +69,16 @@ void consumer(int consId) // 1 <+ consId <= numConsumers
 	{
 		sleepTime = rand() * FACTOR;
 		sleep(sleepTime);    // sleep for x unit of time
-		item = rand() % 100 ; // generate a random number as item
+		//item = rand() % 100 ; // generate a random number as item
 
 		int bufferIndex = getRandomBufferIndex();
+		sem_wait ;
 
 		b[bufferIndex].removeItem(item);
 
-		outputThread("Consumer " + std::to_string(consId) + "  consumed 	" + std::to_string(item)+ "   from   buffer "+std::to_string(bufferIndex));
+		outputThread("Consumer " + std::to_string(consId) + "  consumed 	" + std::to_string(item + 2)+ "   from   buffer "+std::to_string(bufferIndex));
 	}
+	sem_post;
 }
 
 int main( int argc , char * argv[])
@@ -123,7 +127,7 @@ int main( int argc , char * argv[])
 	std::thread consumers[numConsumers];
 	for (int i = 0; i < numConsumers; i++)
 	{
-		consumers[i] = std::thread(consumer, i);
+		consumers[i] = std::thread(consumer, i) ;
 	}
 
 	// sleep for sleepTime seconds
