@@ -1,7 +1,4 @@
 /*
-*PRINCE CLUMSON-EKLU
-* WSU ID # H888A642
-* EMAIL: paclumson-eklu@shockers.wichita.edu
 *This is the Thread.cpp file
 */
 
